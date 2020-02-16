@@ -1,0 +1,77 @@
+#Given a Binary Search Tree, update every node in the BST to contain the sum of all
+nodes greater than and equal to itself. Assume that the nodes are unique and no
+number is repeated.
+
+
+class newNode: 
+
+	# Constructor to create a new node 
+	def __init__(self, data): 
+		self.data = data 
+		self.left = None
+		self.right = None
+
+# Recursive function to add all greater 
+def modifyBSTUtil(root, Sum): 
+	
+		if root == None: 
+		return
+    modifyBSTUtil(root.right, Sum) 
+
+	# Now Sum[0] has sum of nodes in right 
+	# subtree, add root.data to sum and 
+	# update root.data 
+	Sum[0] = Sum[0] + root.data 
+	root.data = Sum[0] 
+ 
+	modifyBSTUtil(root.left, Sum) 
+
+# A wrapper over modifyBSTUtil() 
+def modifyBST(root): 
+	Sum = [0] 
+	modifyBSTUtil(root, Sum) 
+
+# A utility function to do inorder 
+# traversal of BST 
+def inorder(root): 
+	if root != None: 
+		inorder(root.left) 
+		print(root.data,end=" ") 
+		inorder(root.right) 
+
+# A utility function to insert a new node 
+# with given data in BST 
+def insert(node, data): 
+	
+	# If the tree is empty, return a new node 
+	if node == None: 
+		return newNode(data) 
+
+	# Otherwise, recur down the tree 
+	if data <= node.data: 
+		node.left = insert(node.left, data) 
+	else: 
+		node.right = insert(node.right, data) 
+
+	# return the (unchanged) node pointer 
+	return node 
+
+# Driver Code 
+if __name__ == '__main__': 
+	
+	root = None
+	root = insert(root, 50) 
+	insert(root, 3) 
+	insert(root, 2) 
+	insert(root, 4) 
+	insert(root, 8) 
+	insert(root, 6) 
+	insert(root, 10) 
+
+	modifyBST(root) 
+
+	# print inoder tarversal of the 
+	# modified BST 
+	inorder(root) 
+	
+
